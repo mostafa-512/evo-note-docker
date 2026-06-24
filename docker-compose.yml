@@ -1,0 +1,51 @@
+services:
+  front-end:
+    build: ./frontend/.
+    container_name: evo-front-end
+    ports:
+      - "8080:80"
+    networks:
+      - web
+    depends_on:
+    - back-end
+  db:
+    image: postgres:16-alpine
+    container_name: evonote_db
+    networks:
+      - web-back
+    restart: always
+    environment:
+      POSTGRES_USER: mostafa_512
+      POSTGRES_PASSWORD: evonoteapp
+      POSTGRES_DB: evonotedb
+    ports:
+      - "5442:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mostafa_512 -d evonotedb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  back-end:
+    build: ./
+    container_name: evo-back-end
+    networks:
+      - web
+      - web-back
+    restart: always
+    ports:
+      - "5002:5002"
+    environment:
+      - DATABASE_URL=postgresql://mostafa_512:evonoteapp@db:5432/evonotedb
+      - GEMINI_API_KEY=AQ.Ab8RN6IRpQXYQMS2qBQgpeoXQT3INVWT3_cEVueIQdpiOqLWxA
+      - JWT_SECRET_KEY=kvc67vIp2B6H••••••••D2JtwUZH4NSw
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:
+networks:
+  web:
+  web-back:

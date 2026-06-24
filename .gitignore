@@ -1,0 +1,74 @@
+# ===================================
+# 🔹 General
+# ===================================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite
+*.sqlite3
+*.log
+*.env
+.env
+venv/
+.venv/
+*.swp
+.DS_Store
+Thumbs.db
+.local/
+
+# ===================================
+# 🔹 Flask Backend
+# ===================================
+instance/
+*.pid
+*.bak
+*.db-journal
+*.py[cod]
+
+# ===================================
+# 🔹 Node / React Frontend
+# ===================================
+node_modules/
+build/
+.cache/
+.npm/
+.yarn/
+package-lock.json
+yarn-error.log
+coverage/
+*.tsbuildinfo
+dist-ssr/
+*.local
+
+# ===================================
+# 🔹 IDE & Editors
+# ===================================
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ===================================
+# 🔹 OS Files
+# ===================================
+*.bak
+*.tmp
+*.out
+*.orig
+
+# ===================================
+# 🔹 Logs
+# ===================================
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*

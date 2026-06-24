@@ -1,0 +1,25 @@
+venv/
+.venv/
+
+# Python Cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+evo_note.db
+
+frontend/
+
+.env
+.git
+.gitignore
+
+# Docker configuration files
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Misc
+README.md
+vercel.json
