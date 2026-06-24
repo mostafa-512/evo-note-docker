@@ -9,7 +9,6 @@ Instead of jumping between scattered notes and half-baked concepts, EvoNote acts
 ### 🎯 Core Idea
 
 EvoNote takes your initial project idea and helps you:
-
 - Clarify the project vision  
 - Break down the idea into structured features  
 - Suggest possible tech stack and architecture directions  
@@ -17,79 +16,80 @@ EvoNote takes your initial project idea and helps you:
 
 ---
 
-### 🧩 Tech Stack
+### 🧩 Tech Stack (Production-Ready Architecture)
 
-- ⚛️ **Front-End:** React.js + Vite  
-- 🐍 **Back-End:** Flask (Python)  
-- 🌐 **API Layer:** Custom REST APIs connecting front-end and back-end  
-- 🤖 **AI Provider:** Google Gemini  
-- 🔐 **Authentication:** Login & Register system  
-- 📦 **Config & Secrets:** Environment variables via `.env`  
+We have upgraded the infrastructure to a fully containerized, microservices-like architecture:
+
+- ⚛️ **Front-End:** React.js + Vite (Served via Nginx)
+- 🐍 **Back-End:** Flask (Python) powered by Gunicorn
+- 🗄️ **Database:** PostgreSQL (Robust relational database for users & history)
+- 🤖 **AI Provider:** Google Gemini API (gemini-2.5-flash)
+- 🐳 **DevOps & Infra:** Docker & Docker Compose (Multi-stage builds, isolated networks, and Nginx as a Reverse Proxy)
+- 🔐 **Security:** JWT (JSON Web Tokens) for authentication & Bcrypt for password hashing.
 
 ---
 
 ### 🧠 Key Features
 
-- **Streaming AI responses** – messages appear character-by-character for a smooth chat experience  
-- **Simple and responsive UI** for fast interaction  
-- **Clean component-based architecture** on the front-end  
-- **Well-structured API integration** between React and Flask  
-- **System Prompt support**:  
-  You can define the AI’s role to get more focused results, for example:
-  - `Project Architect`
-  - `Code Reviewer`
-  - `Product Manager`  
-  This makes EvoNote more accurate and tailored for different project needs.
+- **Streaming AI responses:** Messages appear character-by-character for a smooth chat experience.
+- **Clean Architecture:** Nginx acts as a reverse proxy, seamlessly routing `/api` requests to the internal Flask backend network.
+- **System Prompt support:** You can define the AI’s role (e.g., `Project Architect`, `Code Reviewer`, `Product Manager`) to get tailored insights.
+- **Persistent Data:** Chat histories and user accounts are securely stored in PostgreSQL using Docker Volumes to prevent data loss.
 
 ---
 
 ### 🔐 Auth & History
 
-- Basic **authentication system** (Register / Login)  
-- **Conversation history** support when running the project locally  
-- Ready to be extended with a real database or multi-session support in the future  
+- Secure **Authentication System** (Register / Login) using JWT.
+- Passwords are encrypted using **bcrypt** before hitting the database.
+- Full **Conversation history** support, attached to authenticated user sessions.
 
 ---
 
 ### 🌱 Future Improvements
 
-Planned ideas and possible next steps:
+- Saving and managing multiple separate project sessions/threads.
+- Enhanced UI/UX and layout improvements.
+- Simple project management features inside EvoNote.
+- Support for multiple AI providers in addition to Gemini.
 
-- Saving and managing multiple project sessions  
-- Enhanced UI/UX and layout improvements  
-- Simple project management features inside EvoNote  
-- Support for multiple AI providers in addition to Gemini  
+---
 
+## 🚀 How to Run (Docker Setup)
 
-EvoNote is part of my learning journey in **Full-Stack Development**, combining **React, Flask, and AI APIs** into one real-world project.  
-If you have any feedback, feature ideas, or want to collaborate, feel free to reach out!
+The project is now fully containerized. You no longer need to manually manage Python virtual environments or Node modules.
 
+**Prerequisites:** 
+Make sure you have [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/) installed on your machine.
 
-## How to run (local development)
+**1. Clone the repository:**
+```bash
+git clone https://github.com/mostafa-512/evo-note-docker.git
+cd evo-note-docker
+```
 
-Assume a Linux environment and repository root at /home/mostafa/EvoNote.
+**2. Configure Environment Variables:
+Create a .env file in the root directory and add your keys:**
+```bash
+# Example .env file
+DATABASE_URL=postgresql://username:password@host:port/database_name
+GEMINI_API_KEY=your_google_gemini_api_key_here
+JWT_SECRET_KEY=your_super_secret_jwt_key
+```
 
-**Backend Setup**
-   - Create and activate a Python virtual environment:
-     ```bash
-     cd /home/mostafa/EvoNote/backend
-     python3 -m venv venv
-     source venv/bin/activate
-     ```
-   - Install dependencies:
-     ```bash
-     pip install -r requirements.txt
-     ```
-   - Create .env from template and edit:
-     ```bash
-     cp .env.example .env
-     # Edit .env and populate required variables such as SECRET_KEY, database URL, and any API keys
-     ```
-   - Start the backend:
-     ```bash
-     python app.py
-     # or, if configured for Flask CLI:
-     export FLASK_APP=app.py
-     flask run
-     ```
-# evo-note-docker
+**3. Build and Run the Containers:
+Run the following command in the root directory to build the images and start the services:**
+```bash
+docker compose up --build
+```
+## 4. Access the App:
+Once the containers are up and running, open your browser and navigate to:
+```bash
+http://localhost:8080
+```
+
+The project is now fully containerized. You no longer need to manually manage Python virtual environments or Node modules.
+
+Nginx will automatically serve the React frontend and proxy all /api requests to the Flask backend!
+
+EvoNote is part of my continuous learning journey in Full-Stack Development & DevOps, combining modern web technologies, AI APIs, and containerization into a real-world scalable project. Feel free to reach out with feedback or ideas!
